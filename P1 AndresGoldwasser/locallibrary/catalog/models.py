@@ -64,6 +64,12 @@ class Book(models.Model):
         """Returns the URL to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
     
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
+    
 # Book Instance: Status of a specific instance of a book
 
 class BookInstance(models.Model):
@@ -93,9 +99,15 @@ class BookInstance(models.Model):
     class Meta:
         ordering = ['due_back']
 
+    def display_book(self):
+        """Create a string for the Book, required to display the book for this instance in Admin."""
+        return str(self.book)
+    
+    display_book.short_description = 'Book title'
+
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} ({self.book.title})'
+        return f'{self.id} ({self.book})'
 
 # Author model: Author of a book or books
 class Author(models.Model):

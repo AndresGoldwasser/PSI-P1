@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>{{author}}</title>
+{% endblock %}
+
+{% block content %}
+  <h1>Author: {{ author }}</h1>
+
+  <p><strong>Date of Birth: </strong>{{ author.date_of_birth }}</p>
+  {% if author.date_of_death != Null %}
+      <p><strong>Date of Death: </strong> {{ author.date_of_death }}</p>
+  {% endif %} 
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Books</h4>
+
+    {% for book in author.book_set.all %}
+      <h4><a href="{% url 'books' %}">{{ book.title }}</a></h1>
+
+      <p><strong>Summary:</strong> {{ book.summary }} <br>
+         <strong>ISBN:</strong> {{ book.isbn }} <br>
+         <strong>Language:</strong> {{ book.language }} <br>
+         <strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
