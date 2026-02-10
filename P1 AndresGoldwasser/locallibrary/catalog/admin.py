@@ -7,7 +7,7 @@ from .models import Author, Genre, Book, BookInstance, Language
 admin.site.register(Language)
 admin.site.register(Genre)
 
-class AuthorBookInLine(admin.TabularInline):
+class BooksInline(admin.TabularInline):
         extra=0
         model = Book
 
@@ -17,7 +17,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
 
-    inlines = [AuthorBookInLine]
+    inlines = [BooksInline]
 
 # Register the admin class with the associated model
 admin.site.register(Author, AuthorAdmin)
@@ -36,9 +36,9 @@ class BookAdmin(admin.ModelAdmin):
 # Register the Admin classes for BookInstance using the decorator
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('display_book', 'status','due_back', 'id')
+    list_display = ('book', 'status','due_back', 'id')
 
-    list_filter = ('book', 'status', 'due_back')
+    list_filter = ('status', 'due_back')
 
     fieldsets = (
         (None, {

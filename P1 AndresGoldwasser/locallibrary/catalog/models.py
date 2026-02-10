@@ -99,12 +99,6 @@ class BookInstance(models.Model):
     class Meta:
         ordering = ['due_back']
 
-    def display_book(self):
-        """Create a string for the Book, required to display the book for this instance in Admin."""
-        return str(self.book)
-    
-    display_book.short_description = 'Book title'
-
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id} ({self.book})'
