@@ -1,0 +1,4 @@
+#Indicado en el paso 10 del tutorial
+.env
+#Indicado en el enunciado de la P1
+*.pyc
