@@ -31,4 +31,4 @@ class AuthorModelTest(TestCase):
     def test_get_absolute_url(self):
         author = Author.objects.get(first_name='Big')
         # This will also fail if the URLConf is not defined.
-        self.assertEqual(author.get_absolute_url(), '/catalog/author/1')
+        self.assertEqual(author.get_absolute_url(), f'/catalog/author/{author.id}')
