@@ -28,7 +28,7 @@ class AuthorListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'catalog/author_list.html')
 
-    def test_pagination_is_three(self):
+    def test_pagination_is_ten(self):
         response = self.client.get(reverse('authors'))
         self.assertEqual(response.status_code, 200)
         self.assertTrue('is_paginated' in response.context)
@@ -328,19 +328,26 @@ class AuthorCreateViewTest(TestCase):
         response = self.client.get(reverse('author-create'))
         self.assertEqual(response.status_code, 403)
 
-    # Test for the correct template and initial data
-    def test_logged_in_with_permission_uses_correct_template_and_initial(self):
+    # Test for acces from a user with permission
+    def test_logged_in_with_permission(self):
         login = self.client.login(username='test_user', password='some_password')
         response = self.client.get(reverse('author-create'))
         self.assertEqual(response.status_code, 200)
+
+    # Test regarding the template
+    def test_uses_correct_template(self):
+        login = self.client.login(username='test_user', password='some_password')
+        response = self.client.get(reverse('author-create'))
         self.assertTemplateUsed(response, 'catalog/author_form.html')
 
-        # The view sets an initial value for date_of_death in the CreateView
-        self.assertIn('form', response.context)
+    # Test for the correct template and initial data
+    def test_form_date_of_death_initially_set_to_expected_date(self):
+        login = self.client.login(username='test_user', password='some_password')
+        response = self.client.get(reverse('author-create'))
         self.assertEqual(response.context['form'].initial.get('date_of_death'), '11/11/2023')
-
+    
     # Test of redirect on success
-    def test_redirects_to_author_detail_on_success(self):
+    def test_redirects_to_detail_view_on_success(self):
         login = self.client.login(username='test_user', password='some_password')
         valid_data = {
             'first_name': 'Terry',
