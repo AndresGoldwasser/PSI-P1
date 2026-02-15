@@ -37,6 +37,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['P1_12_2311_2026_1.onrender.com', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://P1_12_2311_2026_1.onrender.com']
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
